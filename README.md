@@ -1,7 +1,8 @@
-# SQL 50 - LeetCode
+# SQL 50 From Leetcode Studyplan
 Solutions for [SQL 50 Study Plan](https://leetcode.com/studyplan/top-sql-50/) on LeetCode
 
 ---
+
 
 [1757 - Recyclable and Low Fat Products](https://leetcode.com/problems/recyclable-and-low-fat-products/)
 ```sql
@@ -10,6 +11,20 @@ FROM Products
 WHERE low_fats = 'Y'
 AND recyclable = 'Y'
 ```
+---
+
+### SQL Query Explanation
+
+* `SELECT product_id FROM Products;` → fetch the `product_id` column from the `Products` table.
+* Filter rows → `low_fats = 'Y'` **AND** `recyclable = 'Y'`.
+* **Important Notes:**
+
+  * Both conditions must be true for a row to be included.
+  * Use quotes `'Y'` for string/char comparisons.
+
+---
+
+
 
 [584 - Find Customer Referee](https://leetcode.com/problems/find-customer-referee)
 ```sql
@@ -17,7 +32,19 @@ SELECT name
 FROM Customer 
 WHERE referee_id != 2 OR referee_id IS null
 ```
+---
 
+### SQL Query Explanation
+
+* `SELECT name FROM Customer;` → fetch the `name` column from the `Customer` table.
+* Filter rows → `referee_id` ≠ 2 **OR** `referee_id` IS NULL.
+* **Important Notes:**
+
+  * `NULL` comparisons → use `IS NULL`.
+  * `!=` or `<>` ❌ does NOT match `NULL`.
+  * To exclude `NULL` → `AND referee_id IS NOT NULL`.
+
+---
 [595 - Big Countries](https://leetcode.com/problems/big-countries/)
 ```sql
 SELECT name, population, area
@@ -25,6 +52,19 @@ FROM WORLD
 WHERE area >= 3000000
 OR population >= 25000000
 ```
+---
+
+### SQL Query Explanation
+
+* `SELECT name, population, area FROM WORLD;` → fetch the `name`, `population`, and `area` columns from the `WORLD` table.
+* Filter rows → include rows where **area ≥ 3,000,000** **OR** **population ≥ 25,000,000**.
+* **Important Notes:**
+
+  * `OR` means a row is included if **either** condition is true.
+  * Large numbers can be written with or without commas depending on SQL dialect.
+
+---
+
 
 [1148 - Article Views I](https://leetcode.com/problems/article-views-i)
 ```sql
@@ -34,6 +74,19 @@ WHERE viewer_id >= 1
 AND author_id = viewer_id
 ORDER BY author_id
 ```
+---
+
+### SQL Query Explanation
+
+* `SELECT DISTINCT author_id AS id FROM Views;` → fetch unique `author_id` values and rename the column as `id`.
+* Filter rows → only include rows where `viewer_id >= 1` **AND** `author_id = viewer_id`.
+* `ORDER BY author_id;` → sort the results in ascending order by `author_id`.
+* **Important Notes:**
+
+  * `DISTINCT` ensures duplicate `author_id` values are removed.
+  * Both conditions in `WHERE` must be true for a row to be included.
+
+---
 
 [1683 - Invalid Tweets](https://leetcode.com/problems/invalid-tweets/)
 ```sql
@@ -41,6 +94,18 @@ SELECT tweet_id
 FROM Tweets
 WHERE length(content) > 15
 ```
+---
+
+### SQL Query Explanation
+
+* `SELECT tweet_id FROM Tweets;` → fetch the `tweet_id` column from the `Tweets` table.
+* Filter rows → only include rows where the length of `content` is greater than 15 characters.
+* **Important Notes:**
+
+  * `length()` (or `LENGTH()` depending on SQL dialect) returns the number of characters in a string.
+  * Only tweets with more than 15 characters in `content` will be included.
+
+---
 
 [1378 - Replace Employee ID With The Unique Identifier](https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier)
 ```sql
@@ -49,6 +114,21 @@ FROM Employees e
 LEFT JOIN EmployeeUNI eu
 ON e.id = eu.id
 ```
+---
+
+### SQL Query Explanation
+
+* `SELECT unique_id, name FROM Employees e LEFT JOIN EmployeeUNI eu ON e.id = eu.id;`
+  → Fetch `unique_id` and `name` by joining `Employees` (`e`) with `EmployeeUNI` (`eu`) on the `id` column.
+* **Join Type:**
+
+  * `LEFT JOIN` → include **all rows from `Employees`**, even if there is **no matching row** in `EmployeeUNI`.
+* **Important Notes:**
+
+  * If an employee has no match in `EmployeeUNI`, the `unique_id` will be `NULL`.
+  * Aliases (`e` and `eu`) make the query easier to read and write.
+
+---
 
 [1068 - Product Sales Analysis I](https://leetcode.com/problems/product-sales-analysis-i/)
 ```sql
@@ -57,6 +137,22 @@ FROM Sales s
 LEFT JOIN Product p
 ON s.product_id = p.product_id
 ```
+---
+
+### SQL Query Explanation
+
+* `SELECT product_name, year, price FROM Sales s LEFT JOIN Product p ON s.product_id = p.product_id;`
+  → Fetch `product_name`, `year`, and `price` by joining `Sales` (`s`) with `Product` (`p`) on `product_id`.
+* **Join Type:**
+
+  * `LEFT JOIN` → include **all rows from `Sales`**, even if there is **no matching row** in `Product`.
+* **Important Notes:**
+
+  * If a sale has no matching product, `product_name` will be `NULL`.
+  * Table aliases (`s` and `p`) simplify referencing columns.
+
+---
+
 
 [1581 - Customer Who Visited but Did Not Make Any Transactions](https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/)
 ```sql
@@ -65,6 +161,29 @@ FROM Visits
 WHERE visit_id NOT IN (SELECT DISTINCT visit_id FROM Transactions)
 GROUP BY customer_id
 ```
+---
+
+### SQL Query Explanation
+
+* `SELECT customer_id, COUNT(*) AS count_no_trans FROM Visits;`
+  → Fetch the `customer_id` and count of visits **without transactions**.
+
+* **Filter rows:**
+
+  * `WHERE visit_id NOT IN (SELECT DISTINCT visit_id FROM Transactions)`
+    → Only include visits that **do not appear** in the `Transactions` table.
+
+* **Grouping:**
+
+  * `GROUP BY customer_id` → Aggregate the count for each customer separately.
+
+* **Important Notes:**
+
+  * `COUNT(*)` counts the number of rows per customer.
+  * `NOT IN` excludes all visits that have corresponding transactions.
+  * `DISTINCT` ensures no duplicate `visit_id` in the subquery.
+
+---
 
 [197 - Rising Temperature](https://leetcode.com/problems/rising-temperature/) 
 ```sql
@@ -79,6 +198,25 @@ FROM Weather w1, Weather w2
 WHERE w1.temperature > w2.temperature
 AND SUBDATE(w1.recordDate, 1) = w2.recordDate
 ```
+---
+
+### SQL Query Explanation
+
+* **Query Purpose:**
+  Find the `id` of days where the temperature was higher than the previous day.
+
+* **Query:**
+
+  * `SUBDATE(w1.recordDate, 1) = w2.recordDate` → Match the previous day.
+  * `w1.temperature > w2.temperature` → Include days where temperature increased from the previous day.
+
+* **Important Notes:**
+
+  * Self-join (`w1`, `w2`) compares rows within the same table.
+  * This approach is more efficient and readable than using `DATEDIFF`.
+
+---
+
 
 [1661 - Average Time of Process per Machine](https://leetcode.com/problems/average-time-of-process-per-machine/)
 ```sql
@@ -91,6 +229,28 @@ FROM
   GROUP BY machine_id, process_id) AS subq
 GROUP BY machine_id
 ```
+---
+
+### SQL Query Explanation
+
+* **Query Purpose:**
+  Calculate the **average processing time** for each machine.
+
+* **Logic:**
+
+  * The subquery groups data by `machine_id` and `process_id`.
+  * `MAX(CASE WHEN activity_type = 'start' THEN timestamp END)` → Finds the start time of each process.
+  * `MAX(CASE WHEN activity_type = 'end' THEN timestamp END)` → Finds the end time of each process.
+  * The difference `(end - start)` gives the processing time for each process.
+  * `ROUND(AVG(end - start), 3)` → Computes the **average processing time** per machine and rounds it to 3 decimal places.
+
+* **Important Notes:**
+
+  * Subquery is necessary to calculate start and end timestamps per process.
+  * Outer query aggregates the results per machine.
+  * `ROUND()` ensures consistent precision in the output.
+
+---
 
 [577 - Employee Bonus](https://leetcode.com/problems/employee-bonus/solutions/)
 ```sql
@@ -101,6 +261,25 @@ ON e.empId = b.empId
 WHERE bonus < 1000
 OR bonus IS NULL
 ```
+---
+
+### SQL Query Explanation
+
+* **Query Purpose:**
+  Retrieve the `name` and `bonus` of employees who have a bonus less than 1000 or no bonus recorded.
+
+* **Logic:**
+
+  * `LEFT JOIN` connects `Employee` (`e`) with `Bonus` (`b`) on `empId`.
+  * `bonus < 1000 OR bonus IS NULL` → Include employees with small bonuses or **no bonus**.
+  * Using `LEFT JOIN` ensures employees without a bonus still appear in the results.
+
+* **Important Notes:**
+
+  * `IS NULL` is necessary to check for employees without a bonus.
+  * This query combines **filtering** and **joining** to handle both existing and missing bonus data.
+
+---
 
 [1280 - Students and Examinations](https://leetcode.com/problems/students-and-examinations/)
 ```sql
