@@ -15,14 +15,21 @@ AND recyclable = 'Y'
 
 ### SQL Query Explanation
 
-* `SELECT product_id FROM Products;` → fetch the `product_id` column from the `Products` table.
-* Filter rows → `low_fats = 'Y'` **AND** `recyclable = 'Y'`.
+* **Query Purpose:**
+  Retrieve the IDs of products that are **both low in fat and recyclable**.
+
+* **Logic:**
+
+  * `WHERE low_fats = 'Y' AND recyclable = 'Y'` → Filter products satisfying **both conditions**.
+  * `SELECT product_id` → Return only the product IDs that meet the criteria.
+
 * **Important Notes:**
 
-  * Both conditions must be true for a row to be included.
-  * Use quotes `'Y'` for string/char comparisons.
+  * Both conditions must be true for a product to appear in the result.
+  * Useful for identifying eco-friendly, healthy products.
 
 ---
+
 
 
 
@@ -36,15 +43,24 @@ WHERE referee_id != 2 OR referee_id IS null
 
 ### SQL Query Explanation
 
-* `SELECT name FROM Customer;` → fetch the `name` column from the `Customer` table.
-* Filter rows → `referee_id` ≠ 2 **OR** `referee_id` IS NULL.
+* **Query Purpose:**
+  Retrieve customers whose `referee_id` is **not 2** or is **NULL**.
+
+* **Logic:**
+
+  * `referee_id != 2 OR referee_id IS NULL` → Include customers who:
+
+    * Have a `referee_id` different from 2, or
+    * Have no referee assigned (`NULL`).
+  * `SELECT name` → Return only the customer names.
+
 * **Important Notes:**
 
-  * `NULL` comparisons → use `IS NULL`.
-  * `!=` or `<>` ❌ does NOT match `NULL`.
-  * To exclude `NULL` → `AND referee_id IS NOT NULL`.
+  * `NULL` comparisons require `IS NULL`; `!=` does not match `NULL`.
+  * Ensures customers with missing referee data are included.
 
 ---
+
 [595 - Big Countries](https://leetcode.com/problems/big-countries/)
 ```sql
 SELECT name, population, area
@@ -56,14 +72,24 @@ OR population >= 25000000
 
 ### SQL Query Explanation
 
-* `SELECT name, population, area FROM WORLD;` → fetch the `name`, `population`, and `area` columns from the `WORLD` table.
-* Filter rows → include rows where **area ≥ 3,000,000** **OR** **population ≥ 25,000,000**.
+* **Query Purpose:**
+  Retrieve countries with **large area or large population**.
+
+* **Logic:**
+
+  * `WHERE area >= 3000000 OR population >= 25000000` → Include countries that satisfy **either condition**:
+
+    * Area greater than or equal to 3,000,000.
+    * Population greater than or equal to 25,000,000.
+  * `SELECT name, population, area` → Return the country name, population, and area.
+
 * **Important Notes:**
 
-  * `OR` means a row is included if **either** condition is true.
-  * Large numbers can be written with or without commas depending on SQL dialect.
+  * `OR` ensures countries meeting **any one of the criteria** are included.
+  * Useful for identifying major countries by size or population.
 
 ---
+
 
 
 [1148 - Article Views I](https://leetcode.com/problems/article-views-i)
@@ -78,15 +104,23 @@ ORDER BY author_id
 
 ### SQL Query Explanation
 
-* `SELECT DISTINCT author_id AS id FROM Views;` → fetch unique `author_id` values and rename the column as `id`.
-* Filter rows → only include rows where `viewer_id >= 1` **AND** `author_id = viewer_id`.
-* `ORDER BY author_id;` → sort the results in ascending order by `author_id`.
+* **Query Purpose:**
+  Retrieve **authors who have viewed their own content**.
+
+* **Logic:**
+
+  * `author_id = viewer_id` → Only include rows where the viewer is the same as the author.
+  * `viewer_id >= 1` → Ensure valid viewer IDs (optional depending on context).
+  * `SELECT DISTINCT author_id AS id` → Return unique author IDs to avoid duplicates.
+  * `ORDER BY author_id` → Sort results by author ID.
+
 * **Important Notes:**
 
-  * `DISTINCT` ensures duplicate `author_id` values are removed.
-  * Both conditions in `WHERE` must be true for a row to be included.
+  * `DISTINCT` ensures each author appears only once in the result.
+  * Useful for identifying self-interactions in the `Views` table.
 
 ---
+
 
 [1683 - Invalid Tweets](https://leetcode.com/problems/invalid-tweets/)
 ```sql
@@ -98,14 +132,21 @@ WHERE length(content) > 15
 
 ### SQL Query Explanation
 
-* `SELECT tweet_id FROM Tweets;` → fetch the `tweet_id` column from the `Tweets` table.
-* Filter rows → only include rows where the length of `content` is greater than 15 characters.
+* **Query Purpose:**
+  Retrieve the IDs of tweets whose **content length is greater than 15 characters**.
+
+* **Logic:**
+
+  * `length(content) > 15` → Filter tweets with more than 15 characters in the `content` column.
+  * `SELECT tweet_id` → Return only the tweet IDs that satisfy this condition.
+
 * **Important Notes:**
 
-  * `length()` (or `LENGTH()` depending on SQL dialect) returns the number of characters in a string.
-  * Only tweets with more than 15 characters in `content` will be included.
+  * Helps identify longer tweets, possibly for analysis or display purposes.
+  * `length()` counts the number of characters in the string.
 
 ---
+
 
 [1378 - Replace Employee ID With The Unique Identifier](https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier)
 ```sql
@@ -118,17 +159,21 @@ ON e.id = eu.id
 
 ### SQL Query Explanation
 
-* `SELECT unique_id, name FROM Employees e LEFT JOIN EmployeeUNI eu ON e.id = eu.id;`
-  → Fetch `unique_id` and `name` by joining `Employees` (`e`) with `EmployeeUNI` (`eu`) on the `id` column.
-* **Join Type:**
+* **Query Purpose:**
+  Retrieve each employee’s `unique_id` and `name`, including employees **even if they do not have a corresponding entry** in the `EmployeeUNI` table.
 
-  * `LEFT JOIN` → include **all rows from `Employees`**, even if there is **no matching row** in `EmployeeUNI`.
+* **Logic:**
+
+  * `LEFT JOIN EmployeeUNI eu ON e.id = eu.id` → Join `Employees` with `EmployeeUNI`, keeping all employees from `Employees` even if `eu.id` is missing.
+  * `SELECT unique_id, name` → Return the `unique_id` from `EmployeeUNI` (if exists) and the employee `name`.
+
 * **Important Notes:**
 
-  * If an employee has no match in `EmployeeUNI`, the `unique_id` will be `NULL`.
-  * Aliases (`e` and `eu`) make the query easier to read and write.
+  * `LEFT JOIN` ensures **no employees are excluded** due to missing `EmployeeUNI` data.
+  * Employees without a corresponding `EmployeeUNI` entry will have `NULL` for `unique_id`.
 
 ---
+
 
 [1068 - Product Sales Analysis I](https://leetcode.com/problems/product-sales-analysis-i/)
 ```sql
@@ -141,17 +186,21 @@ ON s.product_id = p.product_id
 
 ### SQL Query Explanation
 
-* `SELECT product_name, year, price FROM Sales s LEFT JOIN Product p ON s.product_id = p.product_id;`
-  → Fetch `product_name`, `year`, and `price` by joining `Sales` (`s`) with `Product` (`p`) on `product_id`.
-* **Join Type:**
+* **Query Purpose:**
+  Retrieve **sales information** including product name, year, and price.
 
-  * `LEFT JOIN` → include **all rows from `Sales`**, even if there is **no matching row** in `Product`.
+* **Logic:**
+
+  * `LEFT JOIN Product p ON s.product_id = p.product_id` → Join `Sales` with `Product` to get product details, including all sales even if product details are missing.
+  * `SELECT product_name, year, price` → Return the product name, sales year, and price.
+
 * **Important Notes:**
 
-  * If a sale has no matching product, `product_name` will be `NULL`.
-  * Table aliases (`s` and `p`) simplify referencing columns.
+  * `LEFT JOIN` ensures that all sales are included, even if there is **no matching product record**.
+  * Useful for analyzing sales along with product information.
 
 ---
+
 
 
 [1581 - Customer Who Visited but Did Not Make Any Transactions](https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/)
@@ -165,25 +214,22 @@ GROUP BY customer_id
 
 ### SQL Query Explanation
 
-* `SELECT customer_id, COUNT(*) AS count_no_trans FROM Visits;`
-  → Fetch the `customer_id` and count of visits **without transactions**.
+* **Query Purpose:**
+  Find the number of **visits that did not result in any transaction** for each customer.
 
-* **Filter rows:**
+* **Logic:**
 
-  * `WHERE visit_id NOT IN (SELECT DISTINCT visit_id FROM Transactions)`
-    → Only include visits that **do not appear** in the `Transactions` table.
-
-* **Grouping:**
-
-  * `GROUP BY customer_id` → Aggregate the count for each customer separately.
+  * `visit_id NOT IN (SELECT DISTINCT visit_id FROM Transactions)` → Filter visits that **have no corresponding transactions**.
+  * `COUNT(*) AS count_no_trans` → Count such visits per customer.
+  * `GROUP BY customer_id` → Aggregate results for each customer.
 
 * **Important Notes:**
 
-  * `COUNT(*)` counts the number of rows per customer.
-  * `NOT IN` excludes all visits that have corresponding transactions.
-  * `DISTINCT` ensures no duplicate `visit_id` in the subquery.
+  * `DISTINCT` ensures transaction visit IDs are counted only once in the subquery.
+  * Useful for identifying customers with visits that did not lead to purchases.
 
 ---
+
 
 [197 - Rising Temperature](https://leetcode.com/problems/rising-temperature/) 
 ```sql
@@ -203,19 +249,25 @@ AND SUBDATE(w1.recordDate, 1) = w2.recordDate
 ### SQL Query Explanation
 
 * **Query Purpose:**
-  Find the `id` of days where the temperature was higher than the previous day.
+  Find the IDs of days where the **temperature increased compared to the previous day**.
 
-* **Query:**
+* **Logic (first approach):**
 
-  * `SUBDATE(w1.recordDate, 1) = w2.recordDate` → Match the previous day.
-  * `w1.temperature > w2.temperature` → Include days where temperature increased from the previous day.
+  * `DATEDIFF(w1.recordDate, w2.recordDate) = 1` → Identify rows where `w1` is exactly **one day after `w2`**.
+  * `w1.temperature > w2.temperature` → Include only days where temperature increased.
+
+* **Logic (second approach):**
+
+  * `SUBDATE(w1.recordDate, 1) = w2.recordDate` → Another way to match `w1` with the **previous day**.
+  * `w1.temperature > w2.temperature` → Include only days where temperature increased.
 
 * **Important Notes:**
 
-  * Self-join (`w1`, `w2`) compares rows within the same table.
-  * This approach is more efficient and readable than using `DATEDIFF`.
+  * Both approaches use **self-join** to compare consecutive days.
+  * The second approach (`SUBDATE`) is often more readable and efficient than `DATEDIFF`.
 
 ---
+
 
 
 [1661 - Average Time of Process per Machine](https://leetcode.com/problems/average-time-of-process-per-machine/)
