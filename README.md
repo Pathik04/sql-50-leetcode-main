@@ -3,8 +3,8 @@ Solutions for [SQL 50 Study Plan](https://leetcode.com/studyplan/top-sql-50/) on
 
 ---
 
-
-[1757 - Recyclable and Low Fat Products](https://leetcode.com/problems/recyclable-and-low-fat-products/)
+### SELECT
+1) [1757 - Recyclable and Low Fat Products](https://leetcode.com/problems/recyclable-and-low-fat-products/)
 ```sql
 SELECT product_id
 FROM Products
@@ -13,7 +13,7 @@ AND recyclable = 'Y'
 ```
 ---
 
-### SQL Query Explanation
+###SQL Query Explanation
 
 * **Query Purpose:**
   Retrieve the IDs of products that are **both low in fat and recyclable**.
@@ -33,7 +33,7 @@ AND recyclable = 'Y'
 
 
 
-[584 - Find Customer Referee](https://leetcode.com/problems/find-customer-referee)
+2) [584 - Find Customer Referee](https://leetcode.com/problems/find-customer-referee)
 ```sql
 SELECT name 
 FROM Customer 
@@ -41,7 +41,7 @@ WHERE referee_id != 2 OR referee_id IS null
 ```
 ---
 
-### SQL Query Explanation
+###  SQL Query Explanation
 
 * **Query Purpose:**
   Retrieve customers whose `referee_id` is **not 2** or is **NULL**.
@@ -61,7 +61,7 @@ WHERE referee_id != 2 OR referee_id IS null
 
 ---
 
-[595 - Big Countries](https://leetcode.com/problems/big-countries/)
+3) [595 - Big Countries](https://leetcode.com/problems/big-countries/)
 ```sql
 SELECT name, population, area
 FROM WORLD
@@ -92,7 +92,7 @@ OR population >= 25000000
 
 
 
-[1148 - Article Views I](https://leetcode.com/problems/article-views-i)
+4) [1148 - Article Views I](https://leetcode.com/problems/article-views-i)
 ```sql
 SELECT DISTINCT author_id as id
 FROM Views
@@ -122,7 +122,7 @@ ORDER BY author_id
 ---
 
 
-[1683 - Invalid Tweets](https://leetcode.com/problems/invalid-tweets/)
+5) [1683 - Invalid Tweets](https://leetcode.com/problems/invalid-tweets/)
 ```sql
 SELECT tweet_id
 FROM Tweets
@@ -147,8 +147,8 @@ WHERE length(content) > 15
 
 ---
 
-
-[1378 - Replace Employee ID With The Unique Identifier](https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier)
+### BASIC JOINS
+6) [1378 - Replace Employee ID With The Unique Identifier](https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier)
 ```sql
 SELECT unique_id, name
 FROM Employees e
@@ -175,7 +175,7 @@ ON e.id = eu.id
 ---
 
 
-[1068 - Product Sales Analysis I](https://leetcode.com/problems/product-sales-analysis-i/)
+7) [1068 - Product Sales Analysis I](https://leetcode.com/problems/product-sales-analysis-i/)
 ```sql
 SELECT product_name, year, price
 FROM Sales s
@@ -203,7 +203,7 @@ ON s.product_id = p.product_id
 
 
 
-[1581 - Customer Who Visited but Did Not Make Any Transactions](https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/)
+8) [1581 - Customer Who Visited but Did Not Make Any Transactions](https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/)
 ```sql
 SELECT customer_id, COUNT(*) as count_no_trans
 FROM Visits 
@@ -231,7 +231,7 @@ GROUP BY customer_id
 ---
 
 
-[197 - Rising Temperature](https://leetcode.com/problems/rising-temperature/) 
+9) [197 - Rising Temperature](https://leetcode.com/problems/rising-temperature/) 
 ```sql
 SELECT w1.id 
 FROM Weather w1, Weather w2
@@ -270,7 +270,7 @@ AND SUBDATE(w1.recordDate, 1) = w2.recordDate
 
 
 
-[1661 - Average Time of Process per Machine](https://leetcode.com/problems/average-time-of-process-per-machine/)
+10) [1661 - Average Time of Process per Machine](https://leetcode.com/problems/average-time-of-process-per-machine/)
 ```sql
 SELECT machine_id, ROUND(AVG(end - start), 3) AS processing_time
 FROM 
@@ -304,7 +304,7 @@ GROUP BY machine_id
 
 ---
 
-[577 - Employee Bonus](https://leetcode.com/problems/employee-bonus/solutions/)
+11) [577 - Employee Bonus](https://leetcode.com/problems/employee-bonus/solutions/)
 ```sql
 SELECT name, bonus
 FROM Employee e
@@ -333,7 +333,7 @@ OR bonus IS NULL
 
 ---
 
-[1280 - Students and Examinations](https://leetcode.com/problems/students-and-examinations/)
+12) [1280 - Students and Examinations](https://leetcode.com/problems/students-and-examinations/)
 ```sql
 SELECT a.student_id, a.student_name, b.subject_name, COUNT(c.subject_name) AS attended_exams
 FROM Students a
@@ -366,7 +366,7 @@ ORDER BY 1, 3
 
 ---
 
-[570. Managers with at Least 5 Direct Reports](https://leetcode.com/problems/managers-with-at-least-5-direct-reports)
+13) [570. Managers with at Least 5 Direct Reports](https://leetcode.com/problems/managers-with-at-least-5-direct-reports)
 ```sql
 SELECT name 
 FROM Employee 
@@ -409,7 +409,7 @@ HAVING COUNT(*) >= 5
 ---
 
 
-[1934. Confirmation Rate](https://leetcode.com/problems/confirmation-rate/)
+14) [1934. Confirmation Rate](https://leetcode.com/problems/confirmation-rate/)
 ```sql
 SELECT 
   s.user_id, 
@@ -445,8 +445,8 @@ GROUP BY s.user_id;
   * The result shows `user_id` along with their computed `confirmation_rate`.
 
 ---
-
-[620. Not Boring Movies](https://leetcode.com/problems/not-boring-movies)
+### Basic Aggregate Functions
+15) [620. Not Boring Movies](https://leetcode.com/problems/not-boring-movies)
 ```sql
 -- odd id, "boring", rating desc
 SELECT *
@@ -476,7 +476,7 @@ ORDER BY rating DESC
 
 ---
 
-[1251. Average Selling Price](https://leetcode.com/problems/average-selling-price/)
+16) [1251. Average Selling Price](https://leetcode.com/problems/average-selling-price/)
 ```sql
 -- avg(selling), round 2
 SELECT p.product_id, 
@@ -510,7 +510,7 @@ GROUP BY p.product_id
 
 ---
 
-[1075. Project Employees I](https://leetcode.com/problems/project-employees-i)
+17) [1075. Project Employees I](https://leetcode.com/problems/project-employees-i)
 ```sql
 -- avg(exp_yr), round 2, by project
 SELECT project_id, ROUND(AVG(experience_years), 2) average_years
@@ -540,7 +540,7 @@ GROUP BY project_id
 
 ---
 
-[1633. Percentage of Users Attended a Contest](https://leetcode.com/problems/percentage-of-users-attended-a-contest)
+18) [1633. Percentage of Users Attended a Contest](https://leetcode.com/problems/percentage-of-users-attended-a-contest)
 ```sql
 -- % desc, contest_id asc, round 2
 SELECT r.contest_id,
@@ -572,7 +572,7 @@ ORDER BY percentage DESC, r.contest_id ASC;
 
 ---
 
-[1211 Queries Quality and Percentage](https://leetcode.com/problems/queries-quality-and-percentage)
+19) [1211 Queries Quality and Percentage](https://leetcode.com/problems/queries-quality-and-percentage)
 
 ```sql
 --quality - avg(rating/position), poor query % - %(rating < 3), round 2
@@ -614,7 +614,7 @@ GROUP BY query_name
 
 ---
 
-[1193. Monthly Transactions I](https://leetcode.com/problems/monthly-transactions-i/)
+20) [1193. Monthly Transactions I](https://leetcode.com/problems/monthly-transactions-i/)
 ```sql
 -- month, country, count(trans), total(amt), count(approved_trans), total(amt)
 SELECT DATE_FORMAT(trans_date, '%Y-%m') month, country, 
@@ -659,7 +659,7 @@ GROUP BY 1, 2
 ---
 
 
-[1174. Immediate Food Delivery II](https://leetcode.com/problems/immediate-food-delivery-ii/)
+21) [1174. Immediate Food Delivery II](https://leetcode.com/problems/immediate-food-delivery-ii/)
 ```sql
 SELECT
     ROUND((COUNT(CASE WHEN d.order_date = d.customer_pref_delivery_date THEN 1 END) / COUNT(*)) * 100, 2)  immediate_percentage
@@ -707,7 +707,7 @@ WHERE temp.od = 1
 
 ---
 
-[550. Game Play Analysis IV](https://leetcode.com/problems/game-play-analysis-iv/)
+22) [550. Game Play Analysis IV](https://leetcode.com/problems/game-play-analysis-iv/)
 ```sql
 WITH login_date AS (SELECT player_id, MIN(event_date) AS first_login
 FROM Activity
@@ -746,8 +746,8 @@ WHERE (player_id, event_date) IN
   * The result represents the **retention fraction** of players returning the day after their first login.
 
 ---
-
-[2356. Number of Unique Subjects Taught by Each Teacher](https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher)
+### Sorting and Grouping
+23) [2356. Number of Unique Subjects Taught by Each Teacher](https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher)
 ```sql
 SELECT teacher_id, COUNT(DISTINCT subject_id) cnt
 FROM Teacher
@@ -772,7 +772,7 @@ GROUP BY teacher_id
 
 ---
 
-[1141. User Activity for the Past 30 Days I](https://leetcode.com/problems/user-activity-for-the-past-30-days-i/)
+24) [1141. User Activity for the Past 30 Days I](https://leetcode.com/problems/user-activity-for-the-past-30-days-i/)
 ```sql
 SELECT activity_date as day, COUNT(DISTINCT user_id) AS active_users
 FROM Activity
@@ -799,7 +799,7 @@ GROUP BY activity_date
 
 ---
 
-[1070. Product Sales Analysis III
+25) [1070. Product Sales Analysis III
 ](https://leetcode.com/problems/product-sales-analysis-iii/)
 ```sql
 SELECT s.product_id, s.year AS first_year, s.quantity, s.price
@@ -850,7 +850,7 @@ AND f.first_year = s.year
 
 ---
 
-[596. Classes More Than 5 Students](https://leetcode.com/problems/classes-more-than-5-students/)
+26) [596. Classes More Than 5 Students](https://leetcode.com/problems/classes-more-than-5-students/)
 ```sql
 SELECT class
 FROM Courses
@@ -876,7 +876,7 @@ HAVING COUNT(student) >= 5
 
 ---
 
-[1729. Find Followers Count](https://leetcode.com/problems/find-followers-count/)
+27) [1729. Find Followers Count](https://leetcode.com/problems/find-followers-count/)
 ```sql
 SELECT user_id, COUNT(DISTINCT follower_id) AS followers_count
 FROM Followers
@@ -965,7 +965,7 @@ HAVING COUNT(DISTINCT product_key) = (
   * The result shows `customer_id`s of customers who bought all products.
 
 ---
-
+### Advanced Select and Joins
 [1731. The Number of Employees Which Report to Each Employee
 ](https://leetcode.com/problems/the-number-of-employees-which-report-to-each-employee/)
 
